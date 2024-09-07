@@ -72,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return  employees;
     }
 
-    public boolean validateInput(String firstName, String lastName) {
+    private boolean validateInput(String firstName, String lastName) {
         return isAlpha(firstName) && isAlpha(lastName);
 }
 

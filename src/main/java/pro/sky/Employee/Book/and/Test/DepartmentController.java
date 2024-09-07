@@ -1,42 +1,44 @@
 package pro.sky.Employee.Book.and.Test;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/department")
 public class DepartmentController {
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
     }
     
-    @GetMapping (path = "/max-salary")
-        public Employee maxSalary (@RequestParam ("departmentId") Integer departmentId) {
+    @GetMapping (path = "/{id}/salary/max")
+        public Employee maxSalary (@PathVariable("id") Integer departmentId) {
         return departmentService.maxSalary (departmentId);
 
     }
 
-
-    @GetMapping (path = "/min-salary")
-        public Employee minSalary (@RequestParam ("departmentId") Integer departmentId) {
+    @GetMapping (path = "/{id}/salary/min")
+        public Employee minSalary (@PathVariable("id") Integer departmentId) {
 
         return departmentService.minSalary (departmentId);
 
     }
 
-    @GetMapping (path = "/all", params = "departmentId")
-        public List <Employee> allByDept (@RequestParam ("departmentId") Integer departmentId) {
+    @GetMapping (path = "/{id}/salary/sum")
+    public Integer sumSalary (@PathVariable("id") Integer departmentId) {
+        return departmentService.sumSalary (departmentId);
+
+    }
+
+    @GetMapping (path = "{id}/employees")
+        public List <Employee> allByDept (@PathVariable("id") Integer departmentId) {
         return departmentService.allByDept(departmentId);
 
     }
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/employees")
     public Map <Integer, List<Employee>> groupByDept (){
         return departmentService.groupByDept();
     }
