@@ -50,6 +50,17 @@ public class EmployeeServiceImplTest {
         int departmentId = 5;
         assertThatExceptionOfType(EmployeeAlreadyAddedException.class).isThrownBy(() -> employeeService.addEmployee(firstName, lastName, salary, departmentId));
     }
+    @Test
+    @DisplayName("Выкидывает ошибку, если превышен лимит сотрудников")
+    public void maxEmployee() {
+        var emp1 = employeeService.addEmployee("Витя", "Викторов", 11000, 1);
+        var emp2 = employeeService.addEmployee("Дима", "Викторов", 12000, 1);
+        var emp3 = employeeService.addEmployee("Макс", "Викторов", 13000, 1);
+        var emp4 = employeeService.addEmployee("Даня", "Викторов", 14000, 1);
+        var emp5 = employeeService.addEmployee("Миша", "Викторов", 15000, 1);
+
+        assertThrows(EmployeeStorageIsFullException.class,() -> employeeService.addEmployee("Петя", "Максимов", 13000, 1));
+    }
 
 
     // Удаление сотрудника

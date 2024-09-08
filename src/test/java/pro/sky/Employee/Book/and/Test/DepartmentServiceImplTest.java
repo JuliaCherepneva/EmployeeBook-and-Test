@@ -38,10 +38,25 @@ public class DepartmentServiceImplTest {
             new Employee("Anna", "Marchyk", 18_110, 5),
             new Employee("Dima", "Clayd", 17_590, 5));
 
-
+    /* @BeforeEach
+             void setUp () {
+         List<Employee> employees = List.of(
+                 new Employee("Petr", "Petrov", 26_754, 1),
+                 new Employee("Dima", " Dmitriev", 34_434, 1),
+                 new Employee("Maxim", "Maximov", 87_543, 2),
+                 new Employee("Nadya", "Ivanova", 30_120, 2),
+                 new Employee("Luda", "Lidovskya", 25_430, 3),
+                 new Employee("Alex", "Alexeev", 28_540, 3),
+                 new Employee("Vanya", "Vanovich", 24_240, 4),
+                 new Employee("Luba", "Super", 20_565, 4),
+                 new Employee("Anna", "Marchyk", 18_110, 5),
+                 new Employee("Dima", "Clayd", 17_590, 5));
+          when(employeeService.allEmployees()).thenReturn(employees);
+     }
+ */
     @Test
     @DisplayName("Возвращает сотрудника с максимальной зарплатой")
-    void maxSalary () {
+    void maxSalary() {
         int departmentId = 1;
         when(employeeService.allEmployees()).thenReturn(employees);
         Employee expected = employees.stream()
@@ -53,9 +68,10 @@ public class DepartmentServiceImplTest {
         // check
         assertThat(expected).isEqualTo(actual);
     }
+
     @Test
     @DisplayName("Возвращает сотрудника с минимальной зарплатой")
-    void minSalary () {
+    void minSalary() {
         int departmentId = 1;
         when(employeeService.allEmployees()).thenReturn(employees);
         Employee expected = employees.stream()
@@ -70,12 +86,12 @@ public class DepartmentServiceImplTest {
 
     @Test
     @DisplayName("Возвращает сумму зарплаты по отделу")
-    void sumSalary () {
+    void sumSalary() {
         int departmentId = 1;
         when(employeeService.allEmployees()).thenReturn(employees);
         Integer expected = employees.stream()
                 .filter(employee -> departmentId == employee.getDepartmentId())
-                .reduce(0,(partialSalaryResult, employee) -> partialSalaryResult + employee.getSalary(), Integer::sum);
+                .reduce(0, (partialSalaryResult, employee) -> partialSalaryResult + employee.getSalary(), Integer::sum);
         //test
         Integer actual = departmentService.sumSalary(departmentId);
         // check
@@ -84,7 +100,7 @@ public class DepartmentServiceImplTest {
 
     @Test
     @DisplayName("Возвращает список сотрудников по отделу")
-    void allByDepty () {
+    void allByDepty() {
         int departmentId = 1;
         when(employeeService.allEmployees()).thenReturn(employees);
         List<Employee> expected = employees.stream()
@@ -99,17 +115,16 @@ public class DepartmentServiceImplTest {
 
     @Test
     @DisplayName("Возвращает сотрудников, сгруппированых по отделам")
-    void groupByDept () {
+    void groupByDept() {
         when(employeeService.allEmployees()).thenReturn(employees);
-        Map<Integer, List <Employee>> expected = employees.stream()
+        Map<Integer, List<Employee>> expected = employees.stream()
                 .collect(Collectors.groupingBy(Employee::getDepartmentId));
 
         //test
-        Map<Integer, List <Employee>> actual = departmentService.groupByDept();
+        Map<Integer, List<Employee>> actual = departmentService.groupByDept();
         // check
         assertThat(expected).isEqualTo(actual);
     }
-
 
 
 }
