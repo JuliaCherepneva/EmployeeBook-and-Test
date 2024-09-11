@@ -11,5 +11,5 @@ public interface DepartmentService {
     Employee minSalary (int departmentId);
     List<Employee> allByDept(int departmentId);
     Map<Integer, List<Employee>> groupByDept ();
-
+    Integer sumSalary(int departmentId);
 }

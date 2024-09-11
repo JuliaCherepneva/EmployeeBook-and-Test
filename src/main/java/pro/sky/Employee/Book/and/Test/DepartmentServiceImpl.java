@@ -33,7 +33,12 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .min(Comparator.comparingInt(e -> e.getSalary()))
                 .orElse(null);
     }
-
+    public Integer sumSalary (int departmentId) {
+        return employeeServiceImpl.allEmployees()
+                .stream()
+                .filter(employee -> departmentId == employee.getDepartmentId())
+                .reduce(0,(partialSalaryResult, employee) -> partialSalaryResult + employee.getSalary(), Integer::sum);
+    }
 
     @Override
     public List<Employee> allByDept (int departmentId){
